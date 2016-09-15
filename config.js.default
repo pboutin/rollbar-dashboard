@@ -7,7 +7,6 @@ window.config = {
         //...
     ],
     mapping: {
-        success: /dev|local/,
         warning: /staging/,
         danger: /prod/
     }

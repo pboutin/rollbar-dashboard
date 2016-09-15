@@ -14,8 +14,7 @@ window.config = {
         }
     ],
     mapping: {
-        success: /dev|local/,
-        warning: /staging/,
+        warning: /privatestack/,
         danger: /prod/
     }
 }

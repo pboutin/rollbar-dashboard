@@ -31,9 +31,13 @@ new Vue({
                         var lastOccurrence = new Date(item['last_occurrence_timestamp'] * 1000);
                         item['last_occurrence'] = lastOccurrence.toLocaleString();
 
-                        item['isSuccess'] = mapping['success'].test(item['environment']);
                         item['isWarning'] = mapping['warning'].test(item['environment']);
                         item['isDanger'] = mapping['danger'].test(item['environment']);
+                        item['isDefault'] = ! (item['isWarning'] || item['isDanger']);
+
+                        item['isLevelWarning'] = /warning/.test(item['level']);
+                        item['isLevelDanger'] = /critical|error/.test(item['level']);
+                        item['isLevelDefault'] = ! (item['isLevelWarning'] || item['isLevelDanger']);
 
                         return item;
                     })
