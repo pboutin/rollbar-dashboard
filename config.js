@@ -16,5 +16,6 @@ window.config = {
     mapping: {
         warning: /privatestack/,
         danger: /prod/
-    }
+    },
+    refreshInterval: 20
 }

@@ -2,7 +2,14 @@ new Vue({
     el: '#main',
     data: {
         loadedProjects: [],
-        mapping: null
+        mapping: null,
+        timer: 0,
+        interval: 0
+    },
+    computed: {
+        progress: function () {
+            return this.timer / this.interval * 100
+        }
     },
 
     created: function () {
@@ -12,10 +19,23 @@ new Vue({
             return;
         }
         this.mapping = config.mapping;
-        config.projects.forEach(this.fetchIssues);
+        this.projects = config.projects;
+        this.interval = config.refreshInterval * 2;
+        this.timer = this.interval;
+
+        this.refresh();
     },
 
     methods: {
+        refresh: function() {
+            if (this.timer === this.interval) {
+                this.projects.forEach(this.fetchIssues);
+                this.timer = 0;
+            } else {
+                this.timer++;
+            }
+            setTimeout(this.refresh, 500);
+        },
         fetchIssues: function (project) {
             var self = this
             var baseUrl = 'https://api.rollbar.com/api/1/items?status=active&access_token=';

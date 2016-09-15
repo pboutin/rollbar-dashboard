@@ -9,5 +9,6 @@ window.config = {
     mapping: {
         warning: /staging/,
         danger: /prod/
-    }
+    },
+    refreshInterval: 20 // in seconds
 }

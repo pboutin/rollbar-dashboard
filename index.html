@@ -7,6 +7,9 @@
 </head>
 <body>
 <div id="main" class="container-fluid">
+    <div class="progress">
+        <div class="progress-bar" style="width: {{progress}}%;"></div>
+    </div>
     <div v-for="project in loadedProjects">
         <h3>{{project.title}}</h3>
         <table class="table table-hover table-striped">
