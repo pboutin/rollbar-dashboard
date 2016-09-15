@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rollbar Custom dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/united/bootstrap.min.css">
+</head>
+<body>
+<div id="main" class="container-fluid">
+    <div v-for="project in loadedProjects">
+        <h3>{{project.title}}</h3>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Env.</th>
+                <th>Last occurrence</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in project.items">
+                    <td>{{item.title}}</td>
+                    <td>{{item.environment}}</td>
+                    <td>{{item.last_occurrence}}</td>
+                    <td class="text-right">
+                        <a href="https://rollbar.com/item/{{item.id}}" class="btn btn-primary btn-xs">
+                            Open in Rollbar
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <ul>
+
+        </ul>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+<script src="projects.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
