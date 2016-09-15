@@ -1,7 +1,0 @@
-window.projects = [
-    {
-        title: 'Some title',
-        key: 'Rollbar read access token'
-    },
-    //...
-];

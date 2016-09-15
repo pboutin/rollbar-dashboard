@@ -9,22 +9,24 @@
 <div id="main" class="container-fluid">
     <div v-for="project in loadedProjects">
         <h3>{{project.title}}</h3>
-        <table class="table table-hover">
+        <table class="table table-hover table-striped">
             <thead>
             <tr>
                 <th>Title</th>
                 <th>Env.</th>
+                <th>Framework</th>
                 <th>Last occurrence</th>
                 <th>&nbsp;</th>
             </tr>
             </thead>
             <tbody>
-                <tr v-for="item in project.items">
+                <tr v-for="item in project.items" v-bind:class="{'success': item.isSuccess, 'warning': item.isWarning, 'danger': item.isDanger}">
                     <td>{{item.title}}</td>
                     <td>{{item.environment}}</td>
+                    <td>{{item.framework}}</td>
                     <td>{{item.last_occurrence}}</td>
                     <td class="text-right">
-                        <a href="https://rollbar.com/item/{{item.id}}" class="btn btn-primary btn-xs">
+                        <a target="_blank" href="https://rollbar.com/item/{{item.id}}" class="btn btn-primary btn-xs">
                             Open in Rollbar
                         </a>
                     </td>
@@ -37,7 +39,7 @@
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
-<script src="projects.js"></script>
+<script src="config.js"></script>
 <script src="main.js"></script>
 </body>
 </html>

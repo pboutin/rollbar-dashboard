@@ -1,0 +1,14 @@
+window.config = {
+    projects: [
+        {
+            title: 'Some title',
+            key: 'Rollbar read access token'
+        },
+        //...
+    ],
+    mapping: {
+        success: /dev|local/,
+        warning: /staging/,
+        danger: /prod/
+    }
+}
