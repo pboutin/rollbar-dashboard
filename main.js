@@ -1,7 +1,8 @@
 new Vue({
     el: '#main',
     data: {
-        loadedProjects: [],
+        projects: [],
+        projectsBuffer: [],
         mapping: null,
         timer: 0,
         interval: 0
@@ -45,23 +46,31 @@ new Vue({
             xhr.open('GET', baseUrl + project.key)
             xhr.onload = function () {
                 var response = JSON.parse(xhr.responseText);
-                self.loadedProjects.push({
-                    title: project.title,
-                    items: response.result.items.map(function(item) {
-                        var lastOccurrence = new Date(item['last_occurrence_timestamp'] * 1000);
-                        item['last_occurrence'] = lastOccurrence.toLocaleString();
+                var processedItems = response.result.items.map(function(item) {
+                    var lastOccurrence = new Date(item['last_occurrence_timestamp'] * 1000);
+                    item['last_occurrence'] = lastOccurrence.toLocaleString();
 
-                        item['isWarning'] = mapping['warning'].test(item['environment']);
-                        item['isDanger'] = mapping['danger'].test(item['environment']);
-                        item['isDefault'] = ! (item['isWarning'] || item['isDanger']);
+                    item['isWarning'] = mapping['warning'].test(item['environment']);
+                    item['isDanger'] = mapping['danger'].test(item['environment']);
+                    item['isDefault'] = ! (item['isWarning'] || item['isDanger']);
 
-                        item['isLevelWarning'] = /warning/.test(item['level']);
-                        item['isLevelDanger'] = /critical|error/.test(item['level']);
-                        item['isLevelDefault'] = ! (item['isLevelWarning'] || item['isLevelDanger']);
+                    item['isLevelWarning'] = /warning/.test(item['level']);
+                    item['isLevelDanger'] = /critical|error/.test(item['level']);
+                    item['isLevelDefault'] = ! (item['isLevelWarning'] || item['isLevelDanger']);
 
-                        return item;
-                    })
+                    return item;
                 });
+
+                self.projectsBuffer.push({
+                    title: project.title,
+                    key: project.key,
+                    items: processedItems
+                });
+
+                if (self.projectsBuffer.length === self.projects.length) {
+                    self.projects = self.projectsBuffer;
+                    self.projectsBuffer = [];
+                }
             }
             xhr.send()
         }
