@@ -16,7 +16,7 @@ new Vue({
     created: function () {
         var config = window.config;
         if ( ! config) {
-            alert('You need to define your projects by copying "projects.js.default" to "projects.js".');
+            alert('You need to define your projects by copying "config.js.default" to "config.js".');
             return;
         }
         this.mapping = config.mapping;
@@ -68,7 +68,11 @@ new Vue({
                 });
 
                 if (self.projectsBuffer.length === self.projects.length) {
-                    self.projects = self.projectsBuffer;
+                    self.projects = self.projectsBuffer.sort(function(a, b) {
+                        a = a.items.length ? a.items[0]['last_occurrence_timestamp'] : 0;
+                        b = b.items.length ? b.items[0]['last_occurrence_timestamp'] : 0;
+                        return b - a;
+                    });
                     self.projectsBuffer = [];
                 }
             }
